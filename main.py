@@ -9,10 +9,15 @@ from lxml import html
 import lxml
 
 __author__ = '3000'
-'''
-账号：
-密码：
-'''
+
+_headers = {
+    'Cookie': 'pgv_pvi=6242658304; ptisp=cn; pgv_si=s2404616192; ptui_loginuin=2242857468; RK=qfOvDwK79c; ptcz=907357762bf12f526c2733ebea1252e4ad6a464c807f14de01af558235eb2af2; pt2gguin=o2242857468; uin=o2242857468; skey=@LGZnxOOW9; p_uin=o2242857468; p_skey=Z2X59phi*l2eH1jQdKQkfjAFrkNMpAnjBkgLeGVCCyY_; pt4_token=gejSQxSUhOhVvGfQUdxuHW9*6sPR6LIz1thIQJxIL1U_; pgv_pvid=4687343128; pgv_info=ssid=s506197068',
+    'Host': 'qun.qzone.qq.com',
+    'Upgrade - Insecure - Requests': '1',
+    'Referer': 'http://ui.ptlogin2.qq.com/cgi-bin/login?appid=549000912&daid=5&style=12&s_url=http://qun.qzone.qq.com/group',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
+    'X-Requested-With': 'XMLHttpRequest',
+}
 app = Flask(__name__)
 db_path = 'weibo.sqlite'
 db = SQLAlchemy()
@@ -49,40 +54,18 @@ class Model(object):
 class Person(db.Model, Model):
     __tablename__ = 'persons'
     id = db.Column(db.Integer, primary_key=True)
+    qq = db.Column(db.Integer)
     name = db.Column(db.Text)
-    sex = db.Column(db.Text)
-    follow = db.Column(db.Text)
-    fans = db.Column(db.Text)
-    weibos = db.Column(db.Text)
-    add = db.Column(db.Text)
+    allow = db.Column(db.Boolean)
+    comment = db.Column(db.Text)
     created_time = db.Column(db.Integer, default=0)
 
     def __init__(self):
         self.id = -1
+        self.qq = -1
         self.name = ''
-        self.sex = ''
-        self.follow = ''
-        self.fans = ''
-        self.weibos = ''
-        self.add = ''
+        self.comment = ''
         self.created_time = timestamp()
-
-    def insert(self):
-        person_in_db = Person.query.get(self.id)
-        if person_in_db is None:
-            self.save()
-        else:
-            person_in_db.update(new=self)
-            person_in_db.save()
-
-    def update(self, new):
-        self.name = new.name
-        self.sex = new.sex
-        self.follow = new.follow
-        self.fans = new.fans
-        self.weibos = new.weibos
-        self.add = new.add
-        self.created_time = new.created_time
 
 
 def person_from_li(div):
@@ -157,12 +140,41 @@ def divs_from_html(r):
             f.write(r)
 
 
-def save_html(url, headers):
-    i = url.split('page=')[1]
-    r = requests.get(url, headers=headers)
+def request_get(url, query={}, headers=_headers):
+    r = requests.get(url, params=query, headers=headers)
     r = r.content.decode()
-    with open('davv_{}.html'.format(i), 'w', encoding='utf-8') as f:
+    rjson = r.split('Callback(')[1]
+    rjson = rjson[0:-2]
+    save_json(rjson, name='qun_member')
+
+
+def save_json(r, name='qq'):
+    t = timestamp()
+    with open('htmlcache/{}_{}.json'.format(name, t), 'w', encoding='utf-8') as f:
         f.write(r)
+
+
+def read_json():
+    with open('htmlcache/qq_main_1484534675.json', 'r', encoding='utf-8') as f:
+        rjson = f.read()
+    rdict = json.loads(rjson)
+    group = rdict['data']['group']
+    for i in group:
+        print(i['groupid'])
+
+
+def get_member_from_group(uin='2242857468', groupid='347842957', g_tk='1824438566'):
+    url = 'http://qun.qzone.qq.com/cgi-bin/get_group_member'
+    query = {
+        'callbackFun': '_GroupMember',
+        'uin': uin,
+        'groupid': groupid,
+        'neednum': '1',
+        'g_tk': g_tk,
+        'ua': 'Mozilla%2F5.0%20(Macintosh%3B%20Intel%20Mac%20OS%20X%2010_12_1)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F55.0.2883.95%20Safari%2F537.36'
+    }
+
+    request_get(url, query, _headers)
 
 
 def read_html(i):
@@ -174,16 +186,9 @@ def read_html(i):
 
 
 def requests_with_headers(url):
-    headers = {
-        'Cookie': 'SINAGLOBAL=2912496465019.687.1482808897562; __gads=ID=e21cf0c1e50c0ee6:T=1482809021:S=ALNI_MYa_Eju0e69mKOBKVpe6_KF1h8xcA; un=18640346924; SCF=ArvpvuL1UzXaXmqv9Jj-NVWkl9xWv6WPLvdxFQpVyTEla-YC0kz_TyG25Nv_ztck-9i1bKHg_wT5FBMJZT7CIww.; SUHB=0nle8gO6YrdXX1; ALF=1485522084; SUB=_2A251Z8f0DeRxGeBO41EU8i7NzDSIHXVWq-m8rDV8PUJbkNAKLUL6kW0c_uu8QpOKavb_jIzB97_bYjTbNA..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFy3IlWAegLYa3r132kHbij5JpX5oz75NHD95Qcehn0SKz7eKMRWs4Dqcj.i--NiK.7iKLFi--Xi-iWi-2Ni--Xi-zRiKnNi--fiKnciKLF; UOR=www.google.com,weibo.com,m.weibo.cn; YF-Ugrow-G0=ad83bc19c1269e709f753b172bddb094; wvr=6; YF-V5-G0=b59b0905807453afddda0b34765f9151; _s_tentry=-; Apache=8027407302409.193.1483607530573; ULV=1483607530593:6:2:2:8027407302409.193.1483607530573:1483413510517; YF-Page-G0=c47452adc667e76a7435512bb2f774f3; WBtopGlobal_register_version=c689c52160d0ea3b',
-        'Host': 's.weibo.com',
-        'Upgrade - Insecure - Requests': '1',
-        'Referer': 'http://s.weibo.com/user/%25E9%2587%2591%25E8%259E%258D&page=2',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
-        'X-Requested-With': 'XMLHttpRequest',
-    }
+
     # divs_from_url(url, headers)
-    save_html(url, headers)
+    request_get(url, headers=_headers)
 
 
 def fanshtml_from_davv():
@@ -199,14 +204,20 @@ def fanshtml_from_davv():
 @manager.command
 def main():
     print('crawler run')
-    pages = 4
+    # pages = 4
     # url = 'http://weibo.com/p/1035052887339314/follow?pids=Pl_Official_HisRelation__61&relate=fans&page={}&ajaxpagelet=1&ajaxpagelet_v6=1&__ref=%2Fp%2F1035052887339314%2Ffollow%3Frelate%3Dfans%26from%3D103505%26wvr%3D6%26mod%3Dheadfans%26current%3Dfans%23place&_t=FM_148282001854539'.format(pages)
     # for i in range(39, 52):
     #     url = 'http://s.weibo.com/user/%25E9%2587%2591%25E8%259E%258D&page=' + str(i)
     #     requests_with_headers(url)
     # for i in range(39, 51):
     #     read_html(i)
-    fanshtml_from_davv()
+    # fanshtml_from_davv()
+
+    # url = 'http://qun.qzone.qq.com/cgi-bin/get_group_list?groupcount=4&count=4&callbackFun=_GetGroupPortal&uin=2242857468&g_tk=1824438566&ua=Mozilla%2F5.0%20(Macintosh%3B%20Intel%20Mac%20OS%20X%2010_12_1)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F55.0.2883.95%20Safari%2F537.36'
+    # requests_with_headers(url)
+
+    # read_json()
+    get_member_from_group()
 
 
 if __name__ == '__main__':
