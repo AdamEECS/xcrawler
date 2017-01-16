@@ -6,6 +6,7 @@ db = client.qzone
 person = db.person
 
 items = json.load()
-person.insert_many(items)
+result = person.insert_many(items)
+print('Multiple insert: {}'.format(result.inserted_ids))
 
 
