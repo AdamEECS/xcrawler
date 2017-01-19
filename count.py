@@ -1,4 +1,5 @@
 import os
+import json
 
 
 def count_all(path):
@@ -36,10 +37,20 @@ def group_by(array):
     print(n2, n5, n10, n15, n20)
 
 
+def open_json(filename):
+    with open(filename, encoding='utf-8') as f:
+        text = f.read()
+        array = json.loads(text)
+        array = array['data']['group']
+        print(array)
+
 
 def main():
     path = "E:/xcrawler/jsoncache"
-    count_all(path)
+    # count_all(path)
+    file = '/qq_3411624395=groups.json'
+    filename = path + file
+    open_json(filename)
 
 
 if __name__ == '__main__':

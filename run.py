@@ -4,11 +4,11 @@ import time
 
 __author__ = '3000'
 _account = {
-    'uin': '2242857468',
-    'g_tk': '1824438566',
+    'uin': '3411624395',
+    'g_tk': '103183856',
 }
 _headers = {
-    'Cookie': 'pgv_pvi=6242658304; ptisp=cn; pgv_si=s2404616192; ptui_loginuin=2242857468; RK=qfOvDwK79c; ptcz=907357762bf12f526c2733ebea1252e4ad6a464c807f14de01af558235eb2af2; pt2gguin=o2242857468; uin=o2242857468; skey=@LGZnxOOW9; p_uin=o2242857468; p_skey=Z2X59phi*l2eH1jQdKQkfjAFrkNMpAnjBkgLeGVCCyY_; pt4_token=gejSQxSUhOhVvGfQUdxuHW9*6sPR6LIz1thIQJxIL1U_; pgv_pvid=4687343128; pgv_info=ssid=s506197068',
+    'Cookie': 'cpu_performance=51; _gscu_661903259=42817501ey2bda90; pgv_pvi=1397720064; RK=nlNqYajjSv; pac_uid=1_986523974; tvfe_boss_uuid=daff260f2959cf25; o_cookie=986523974; pgv_pvid=2388668785; pgv_si=s9370320896; pgv_info=ssid=s946051304; QZ_FE_WEBP_SUPPORT=1; cpu_performance_v8=30; qzspeedup=sdch; qqmusic_uin=; qqmusic_key=; qqmusic_fromtag=; qzmusicplayer=qzone_player_8637650_1484275768276; rv2=80CC32496881903EAD7468C947DDE2C862DA8FF86107325304; property20=786849BF82F574FDC7FFABAD75682A5647F288E1834F2D6728C500B3F599A723E51B95D33EE24303; __Q_w_s__QZN_TodoMsgCnt=1; logout_page=; dm_login_weixin_rem=; qm_authimgs_id=1; qm_verifyimagesession=h01f9a61c66c2d109568cb7af087a3b1a7618f03cf1c481edd65cbf19250b15bb74148ba693df94c826; ptui_loginuin=3411624395; ptisp=ctc; ptcz=919ce23c00eb03241bc6af35e47843d81951168b3d026d6112a4b24b5c038854; pt2gguin=o3411624395; uin=o3411624395; skey=@ptfB5CqBT; p_uin=o3411624395; p_skey=9Xwi06COjSEUXHOgXatxJ-*BlsXKNMiN-lUIHTU61Hg_; pt4_token=loKCD5i2bSSzQcKivQOw*2PH36mxcJTgb8KhEi-ASm0_',
     'Host': 'qun.qzone.qq.com',
     'Upgrade - Insecure - Requests': '1',
     'Referer': 'http://ui.ptlogin2.qq.com/cgi-bin/login?appid=549000912&daid=5&style=12&s_url=http://qun.qzone.qq.com/group',

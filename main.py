@@ -200,7 +200,6 @@ def fanshtml_from_davv():
         time.sleep(2)
 
 
-
 @manager.command
 def main():
     print('crawler run')
