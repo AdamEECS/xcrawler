@@ -26,7 +26,7 @@ var/
 
 .idea/
 htmlcache/
-jsoncache/
+jsoncache*/
 migrations/
 *.sqlite
 config.py
