@@ -4,11 +4,11 @@ import time
 
 __author__ = '3000'
 _account = {
-    'uin': '3411624395',
-    'g_tk': '103183856',
+    'uin': '2176966516',
+    'g_tk': '1921877694',
 }
 _headers = {
-    'Cookie': 'cpu_performance=51; _gscu_661903259=42817501ey2bda90; pgv_pvi=1397720064; RK=nlNqYajjSv; pac_uid=1_986523974; tvfe_boss_uuid=daff260f2959cf25; o_cookie=986523974; pgv_pvid=2388668785; pgv_si=s9370320896; pgv_info=ssid=s946051304; QZ_FE_WEBP_SUPPORT=1; cpu_performance_v8=30; qzspeedup=sdch; qqmusic_uin=; qqmusic_key=; qqmusic_fromtag=; qzmusicplayer=qzone_player_8637650_1484275768276; rv2=80CC32496881903EAD7468C947DDE2C862DA8FF86107325304; property20=786849BF82F574FDC7FFABAD75682A5647F288E1834F2D6728C500B3F599A723E51B95D33EE24303; __Q_w_s__QZN_TodoMsgCnt=1; logout_page=; dm_login_weixin_rem=; qm_authimgs_id=1; qm_verifyimagesession=h01f9a61c66c2d109568cb7af087a3b1a7618f03cf1c481edd65cbf19250b15bb74148ba693df94c826; ptui_loginuin=3411624395; ptisp=ctc; ptcz=919ce23c00eb03241bc6af35e47843d81951168b3d026d6112a4b24b5c038854; pt2gguin=o3411624395; uin=o3411624395; skey=@ptfB5CqBT; p_uin=o3411624395; p_skey=9Xwi06COjSEUXHOgXatxJ-*BlsXKNMiN-lUIHTU61Hg_; pt4_token=loKCD5i2bSSzQcKivQOw*2PH36mxcJTgb8KhEi-ASm0_',
+    'Cookie': 'ptisp=cn; pgv_pvi=4008537088; pgv_si=s914063360; ptui_loginuin=2176966516; RK=qbWuhoWb9d; ptcz=3ec4c2dad492b4a95c92a9891a44a2cc5ab636085c9a09a0a8027f6c302d8b02; pt2gguin=o2176966516; uin=o2176966516; skey=@ZgUEnQr9t; p_uin=o2176966516; p_skey=i*cg4ZXxH1rBBN1*Sn1Ut*dDpWUr3V6leRD26lmrUvo_; pt4_token=XA9zZnZkzTIodJ8WNpHrfRIJIsJM5WqmGBMjAs*wjq8_; pgv_pvid=7282818877; pgv_info=ssid=s1774978000',
     'Host': 'qun.qzone.qq.com',
     'Upgrade - Insecure - Requests': '1',
     'Referer': 'http://ui.ptlogin2.qq.com/cgi-bin/login?appid=549000912&daid=5&style=12&s_url=http://qun.qzone.qq.com/group',
@@ -32,7 +32,7 @@ def request_get(url, query=None):
 
 
 def save_json(r, name='qq'):
-    with open('jsoncache/{}.json'.format(name), 'w', encoding='utf-8') as f:
+    with open('jsoncache0120/{}.json'.format(name), 'w', encoding='utf-8') as f:
         f.write(r)
 
 
@@ -71,9 +71,12 @@ def get_member_from_group(group):
 
 def start_crawler():
     groups = get_all_group()
+    num = 0
     for group in groups:
         get_member_from_group(group)
-        time.sleep(3)
+        num += 1
+        print(num)
+        # time.sleep(2)
 
 
 def main():
