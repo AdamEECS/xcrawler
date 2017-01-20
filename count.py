@@ -46,11 +46,11 @@ def open_json(filename):
 
 
 def main():
-    path = "E:/xcrawler/jsoncache"
-    # count_all(path)
-    file = '/qq_3411624395=groups.json'
-    filename = path + file
-    open_json(filename)
+    path = "E:/xcrawler/jsoncache0120"
+    count_all(path)
+    # file = '/qq_3411624395=groups.json'
+    # filename = path + file
+    # open_json(filename)
 
 
 if __name__ == '__main__':
