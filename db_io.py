@@ -213,8 +213,8 @@ def get_userinfo_all():
 @manager.command
 def main():
     # import_group('jsoncache/qq_3411624395=groups.json')
-    # import_person('jsoncache/')
-    get_userinfo_all()
+    import_person('jsoncache0120/')
+    # get_userinfo_all()
 
 
 if __name__ == '__main__':
