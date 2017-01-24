@@ -4,11 +4,11 @@ import time
 
 __author__ = '3000'
 _account = {
-    'uin': '2176966516',
-    'g_tk': '1921877694',
+    'uin': '2070428977',
+    'g_tk': '1936570685',
 }
 _headers = {
-    'Cookie': 'ptisp=cn; pgv_pvi=4008537088; pgv_si=s914063360; ptui_loginuin=2176966516; RK=qbWuhoWb9d; ptcz=3ec4c2dad492b4a95c92a9891a44a2cc5ab636085c9a09a0a8027f6c302d8b02; pt2gguin=o2176966516; uin=o2176966516; skey=@ZgUEnQr9t; p_uin=o2176966516; p_skey=i*cg4ZXxH1rBBN1*Sn1Ut*dDpWUr3V6leRD26lmrUvo_; pt4_token=XA9zZnZkzTIodJ8WNpHrfRIJIsJM5WqmGBMjAs*wjq8_; pgv_pvid=7282818877; pgv_info=ssid=s1774978000',
+    'Cookie': 'pgv_pvi=9962304512; pgv_si=s8613456896; ptui_loginuin=2070428977; ptisp=ctc; RK=nhVu4XNfel; ptcz=bd1e970c616b32b087aab5262b751a937c30e750fa1808ac519de6022183a628; pt2gguin=o2070428977; uin=o2070428977; skey=@gi8xemvke; p_uin=o2070428977; p_skey=FC965E7yfOSS6da3JT2dHy5S5i5iEDpWueZxWhGpacA_; pt4_token=NdJ8ZFejw2TQmJQa0tsVBhjj0CqQrkLAcr3xrdrmixU_; pgv_pvid=2335499456; pgv_info=ssid=s5033538176',
     'Host': 'qun.qzone.qq.com',
     'Upgrade - Insecure - Requests': '1',
     'Referer': 'http://ui.ptlogin2.qq.com/cgi-bin/login?appid=549000912&daid=5&style=12&s_url=http://qun.qzone.qq.com/group',
@@ -32,7 +32,7 @@ def request_get(url, query=None):
 
 
 def save_json(r, name='qq'):
-    with open('jsoncache0120/{}.json'.format(name), 'w', encoding='utf-8') as f:
+    with open('jsondata0124/p2p/{}.json'.format(name), 'w', encoding='utf-8') as f:
         f.write(r)
 
 
@@ -63,7 +63,7 @@ def get_member_from_group(group):
     }
     r = request_get(url, query)
     r_dict = json.loads(r)
-    print(r_dict)
+    print(r_dict['data']['group_name'])
     members_json = json.dumps(r_dict, ensure_ascii=False, indent=4)
     name = 'qq_{}=group_{}=total_{}'.format(_account['uin'], group['groupid'], r_dict['data']['total'])
     save_json(members_json, name)
@@ -73,10 +73,15 @@ def start_crawler():
     groups = get_all_group()
     num = 0
     for group in groups:
-        get_member_from_group(group)
-        num += 1
-        print(num)
-        time.sleep(1)
+        try:
+            get_member_from_group(group)
+            num += 1
+            print(num)
+            time.sleep(1)
+        except UnicodeDecodeError:
+            print('UnicodeDecodeError')
+        except :
+            print('other error')
 
 
 def main():
