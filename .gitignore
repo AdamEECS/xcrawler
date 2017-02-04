@@ -29,6 +29,7 @@ htmlcache/
 json*/
 migrations/
 *.sqlite
+*.db
 config.py
 
 # PyInstaller
