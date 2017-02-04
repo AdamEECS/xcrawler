@@ -9,7 +9,7 @@ import requests
 import time
 
 app = Flask(__name__)
-db_path = 'qzone.sqlite'
+db_path = 'qq20170204.db'
 db = SQLAlchemy()
 manager = Manager(app)
 
@@ -58,10 +58,11 @@ class Group(db.Model, Model):
 
 
 class Person(db.Model, Model):
-    __tablename__ = 'person'
+    __tablename__ = 'person_all'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
+    tag = db.Column(db.Text)
 
     def __init__(self, form):
         self.id = form.get('uin')
@@ -147,25 +148,27 @@ def import_group(filename):
         g.save()
 
 
-def import_person_single(path, file):
+def import_person_single(path, file, tag):
     filename = path + file
     array = open_json(filename)
     array = array['data']['item']
     for i in array:
         p = Person(i)
+        p.tag = tag
         exist = Person.query.get(p.id)
         if exist is None:
-            p.save()
-            print('save one')
+            db.session.add(p)
+            t = time.time()
+            print('save one', t)
 
 
-def import_person(path):
+def import_person(path, tag):
     files = os.listdir(path)
     num = 0
     for file in files:
         if len(file) < 30:
             continue
-        import_person_single(path, file)
+        import_person_single(path, file, tag)
         num += 1
         print(num)
         print(file)
@@ -210,11 +213,28 @@ def get_userinfo_all():
             time.sleep(3)
 
 
+def import_person_all():
+    path_list = [
+        ('jsoncache/', '外汇'),
+        ('jsoncache0120/', '外汇'),
+        ('jsondata0124/baoxian/', '保险'),
+        ('jsondata0124/licai/', '理财'),
+        ('jsondata0124/p2p/', 'p2p'),
+        ('jsondata0124/qihuo/', '期货'),
+        ('jsondata0124/weishang/', '微商'),
+    ]
+    for path, tag in path_list:
+        import_person(path, tag)
+
+    db.session.commit()
+
+
 @manager.command
 def main():
     # import_group('jsoncache/qq_3411624395=groups.json')
-    import_person('jsoncache0120/')
+    # import_person('jsoncache0120/')
     # get_userinfo_all()
+    import_person_all()
 
 
 if __name__ == '__main__':
