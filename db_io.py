@@ -225,7 +225,7 @@ def import_person_all():
     ]
     for path, tag in path_list:
         import_person(path, tag)
-
+    # haven't commit yet
     db.session.commit()
 
 
