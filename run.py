@@ -32,7 +32,7 @@ def request_get(url, query=None):
 
 
 def save_json(r, name='qq'):
-    with open('jsondata0124/p2p/{}.json'.format(name), 'w', encoding='utf-8') as f:
+    with open('jsondata0124/licai/{}.json'.format(name), 'w', encoding='utf-8') as f:
         f.write(r)
 
 
