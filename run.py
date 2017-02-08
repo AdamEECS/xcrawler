@@ -4,11 +4,11 @@ import time
 
 __author__ = '3000'
 _account = {
-    'uin': '2927883557',
-    'g_tk': '10871803',
+    'uin': '3042341403',
+    'g_tk': '1563250240',
 }
 _headers = {
-    'Cookie': 'ptui_loginuin=2927883557; ptisp=ctc; RK=nQPL4a0v+l; ptcz=2d6831281490221060c072a0cf410e2e71e68c8e8a4165626b68e24cdccdddd9; pt2gguin=o2927883557; uin=o2927883557; skey=@c650YsNsk; p_uin=o2927883557; p_skey=zq*jXIB5LoIttiCPI320Q5mfZf1G3-hpy7zBOaimM4k_; pt4_token=qCV7QsgIfOSwx7kbCOgUDT-K8dh*ZftQrPXOp2WYAHg_; pgv_pvid=145014125; pgv_info=ssid=s7217107955',
+    'Cookie': 'ptui_loginuin=3042341403; ptisp=ctc; RK=nE97JLD72h; ptcz=1f524e309414eb7290c6f20e77064ddf1e6d7c64cca94361101908afdd6d97ea; pt2gguin=o3042341403; uin=o3042341403; skey=@IET48wfgI; p_uin=o3042341403; p_skey=lK2l57KDwaubMHoQlwJCF0qlNtDYPl5mRQd0L5BnOzc_; pt4_token=2iChp**iVwYbjmuF9MmhB0MVWZTFa-08CQlDYDoDvjM_',
     'Host': 'qun.qzone.qq.com',
     'Upgrade - Insecure - Requests': '1',
     'Referer': 'http://ui.ptlogin2.qq.com/cgi-bin/login?appid=549000912&daid=5&style=12&s_url=http://qun.qzone.qq.com/group',
@@ -32,7 +32,7 @@ def request_get(url, query=None):
 
 
 def save_json(r, name='qq'):
-    with open('jsondata0208/xianhuo/{}.json'.format(name), 'w', encoding='utf-8') as f:
+    with open('jsondata0208/gupiao_2/{}.json'.format(name), 'w', encoding='utf-8') as f:
         f.write(r)
 
 

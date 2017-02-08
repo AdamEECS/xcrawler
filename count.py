@@ -46,7 +46,7 @@ def open_json(filename):
 
 
 def main():
-    path = "E:/xcrawler/jsondata0124/p2p"
+    path = "E:/xcrawler/jsondata0208/xianhuo"
     count_all(path)
     # file = '/qq_3411624395=groups.json'
     # filename = path + file
