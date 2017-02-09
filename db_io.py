@@ -13,12 +13,12 @@ db = SQLAlchemy()
 manager = Manager(app)
 
 _account = {
-    'uin': '3356008645',
-    'g_tk': '1620541943',
+    'uin': '3411624395',
+    'g_tk': '321064777',
     'limit': 8820,
 }
 _headers = {
-    'Cookie': 'zzpaneluin=; zzpanelkey=; pgv_pvi=5725506560; pgv_si=s2627557376; ptui_loginuin=3356008645; ptisp=ctc; RK=nhFaze4r20; ptcz=09cfe05d99faf4a12525f5e34f5414444f6160c78e8bcd72b2114991e87ce488; pt2gguin=o3356008645; uin=o3356008645; skey=@MOLTRnaf7; p_uin=o3356008645; p_skey=O8C38-bKy3A6lxVCR*88*n1VX1OKUs0psf57Mvo3EHw_; pt4_token=ZQj7ND62G67RVslX026Ik3etf0ZqyVY5QmZeFIkI5ME_; pgv_pvid=5621453928; pgv_info=ssid=s485117351; qzspeedup=sdch',
+    'Cookie': 'pgv_pvid=1160608280; pgv_info=ssid=s6207716200; ptui_loginuin=3411624395; ptisp=ctc; RK=ny1KTbIf2w; ptcz=26ce7bea8dfddb6d168f01552d5f10bd95239bfbc29732e5addd91e46c19ee93; pt2gguin=o3411624395; uin=o3411624395; skey=@duHJMHXzP; p_uin=o3411624395; p_skey=od0CRgXVqB*g*axXe80bY5z0aZJayWqT74ZTyFe6GVg_; pt4_token=g01P1MfhGPjrvfYeJvHVN3dAaSRdPzr77LJKm4av9NE_; fnc=2; Loading=Yes; qzspeedup=sdch; QZ_FE_WEBP_SUPPORT=1',
 }
 
 
@@ -62,6 +62,7 @@ class Person(db.Model, Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     tag = db.Column(db.Text)
+    have_detail = db.Column(db.Integer, default=0)
 
     def __init__(self, form):
         self.id = form.get('uin')
@@ -187,14 +188,10 @@ def get_userinfo(user):
 
 
 def get_userinfo_all():
-    users = Person.query.all()
-    i = 0
-    num = 8820
-    num_got = 4263
+    users = Person.query.filter(Person.have_detail == 0).all()
+    num = 1051
+    num_got = 462
     for user in users:
-        if i < 8820:
-            i += 1
-            continue
         exist = Userinfo.query.get(user.id)
         if exist is not None:
             continue
@@ -207,20 +204,19 @@ def get_userinfo_all():
         except:
             pass
         finally:
+            user.have_detail = 1
+            user.save()
             num += 1
             print('total: ', num)
-            time.sleep(3)
+            time.sleep(1.5)
 
 
 def import_person_all():
     path_list = [
-        ('jsoncache/', '外汇'),
-        ('jsoncache0120/', '外汇'),
-        ('jsondata0124/baoxian/', '保险'),
-        ('jsondata0124/licai/', '理财'),
-        ('jsondata0124/p2p/', 'p2p'),
-        ('jsondata0124/qihuo/', '期货'),
-        ('jsondata0124/weishang/', '微商'),
+        ('jsondata0208/gupiao1_111514/', '股票'),
+        ('jsondata0208/gupiao2_110711/', '股票'),
+        ('jsondata0208/huangjin_100080/', '黄金'),
+        ('jsondata0208/xianhuo_74759/', '现货'),
     ]
     for path, tag in path_list:
         import_person(path, tag)
@@ -232,8 +228,8 @@ def import_person_all():
 def main():
     # import_group('jsoncache/qq_3411624395=groups.json')
     # import_person('jsoncache0120/')
-    # get_userinfo_all()
-    import_person_all()
+    get_userinfo_all()
+    # import_person_all()
 
 
 if __name__ == '__main__':
