@@ -15,7 +15,7 @@ manager = Manager(app)
 _account = {
     'uin': '3411624395',
     'g_tk': '321064777',
-    'limit': 8820,
+    'limit': 0,
 }
 _headers = {
     'Cookie': 'pgv_pvid=1160608280; pgv_info=ssid=s6207716200; ptui_loginuin=3411624395; ptisp=ctc; RK=ny1KTbIf2w; ptcz=26ce7bea8dfddb6d168f01552d5f10bd95239bfbc29732e5addd91e46c19ee93; pt2gguin=o3411624395; uin=o3411624395; skey=@duHJMHXzP; p_uin=o3411624395; p_skey=od0CRgXVqB*g*axXe80bY5z0aZJayWqT74ZTyFe6GVg_; pt4_token=g01P1MfhGPjrvfYeJvHVN3dAaSRdPzr77LJKm4av9NE_; fnc=2; Loading=Yes; qzspeedup=sdch; QZ_FE_WEBP_SUPPORT=1',
