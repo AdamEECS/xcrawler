@@ -77,7 +77,7 @@ def start_crawler():
             get_member_from_group(group)
             num += 1
             print(num)
-            time.sleep(1)
+            time.sleep(3)
         except UnicodeDecodeError:
             print('UnicodeDecodeError')
         except :
