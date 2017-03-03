@@ -5,7 +5,7 @@ import time
 __author__ = '3000'
 _account = {
     'uin': '3042341403',
-    'g_tk': '1563250240',
+    'g_tk': '',
 }
 _headers = {
     'Cookie': 'ptui_loginuin=3042341403; ptisp=ctc; RK=nE97JLD72h; ptcz=1f524e309414eb7290c6f20e77064ddf1e6d7c64cca94361101908afdd6d97ea; pt2gguin=o3042341403; uin=o3042341403; skey=@IET48wfgI; p_uin=o3042341403; p_skey=lK2l57KDwaubMHoQlwJCF0qlNtDYPl5mRQd0L5BnOzc_; pt4_token=2iChp**iVwYbjmuF9MmhB0MVWZTFa-08CQlDYDoDvjM_',
